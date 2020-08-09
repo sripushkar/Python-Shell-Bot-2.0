@@ -4,9 +4,11 @@ import json
 import discord
 import traceback
 from contextlib import redirect_stdout
+from dotenv import load_dotenv
 
-with open("user.json") as file:
-    userDetails = json.load(file)
+load_dotenv()
+TOKEN = os.getenv('TOKEN')
+
 
 TOKEN = userDetails["TOKEN"]
 client = discord.Client()
