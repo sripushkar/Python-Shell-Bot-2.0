@@ -41,7 +41,7 @@ async def on_message(message):
                     exec(func_str)
                 out = stdout.getvalue()
                 reply = out, out.strip() == '3'
-                reply = reply[0]
+                reply = str(reply[0])
 
             except:
                 trace = traceback.format_exc()
