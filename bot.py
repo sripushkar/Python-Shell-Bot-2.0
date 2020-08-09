@@ -2,8 +2,12 @@ import os
 import io
 from contextlib import redirect_stdout
 
+with open("user.json") as file:
+    userDetails = json.load(file)
 
-TOKEN = os.environ['TOKEN']
+TOKEN = userDetails["DISCORD_TOKEN"]
+client = discord.Client()
+
 prefix = '>>'
 
 def isCommand(msg):
@@ -39,6 +43,6 @@ async def on_message(message):
             reply = eval(python)
 
         await message.channel.send(reply)
-    
+
 
 client.run(TOKEN)
