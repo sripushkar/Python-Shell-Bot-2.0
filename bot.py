@@ -1,22 +1,22 @@
 import os
 import io
+import json
+import discord
 from contextlib import redirect_stdout
 
 with open("user.json") as file:
     userDetails = json.load(file)
 
-TOKEN = userDetails["DISCORD_TOKEN"]
+TOKEN = userDetails["TOKEN"]
 client = discord.Client()
 
-prefix = '>>'
-
-def isCommand(msg):
-    if msg[0,2] == prefix and "import os" not in msg:
+def isCommand(msg, prefix):
+    if msg[0:2] == prefix and "import os" not in msg:
         return True
     return False
 
-def formatCommand(str):
-    newStr = newStr.replace(prefix, "")
+def formatCommand(str, prefix):
+    newStr = str.replace(prefix, "")
     newStr = newStr.replace("’", "'")
     newStr = newStr.replace("“", "\"")
     newStr = newStr.replace("”", "\"")
@@ -29,8 +29,9 @@ def evalOrExec(str):
 
 @client.event
 async def on_message(message):
-    if isCommand(message.content):
-        python = formatCommand(message.content)
+    pref = '>>'
+    if isCommand(message.content, pref):
+        python = formatCommand(message.content, pref)
         if evalOrExec(python) == 'exec':
             func_str = python
             stdout = io.StringIO()
@@ -39,6 +40,7 @@ async def on_message(message):
 
             out = stdout.getvalue()
             reply = out, out.strip() == '3'
+            reply = reply[0]
         else:
             reply = eval(python)
 
