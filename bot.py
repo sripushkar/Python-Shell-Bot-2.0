@@ -4,11 +4,10 @@ import json
 import discord
 import traceback
 from contextlib import redirect_stdout
+from dotenv import load_dotenv
 
-with open("user.json") as file:
-    userDetails = json.load(file)
-
-TOKEN = userDetails["TOKEN"]
+load_dotenv()
+TOKEN = os.getenv('TOKEN')
 client = discord.Client()
 
 def isCommand(msg, prefix):
