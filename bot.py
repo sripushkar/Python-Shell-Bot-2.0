@@ -2,6 +2,7 @@ import os
 import io
 import json
 import discord
+import traceback
 from contextlib import redirect_stdout
 
 with open("user.json") as file:
@@ -23,7 +24,7 @@ def formatCommand(str, prefix):
     return newStr
 
 def evalOrExec(str):
-    if "\"" in str or "'" in str:
+    if "\"" in str or "'" in str or "=" in str:
         return 'exec'
     return 'eval'
 
@@ -33,14 +34,18 @@ async def on_message(message):
     if isCommand(message.content, pref):
         python = formatCommand(message.content, pref)
         if evalOrExec(python) == 'exec':
-            func_str = python
-            stdout = io.StringIO()
-            with redirect_stdout(stdout):
-                exec(func_str)
+            try:
+                func_str = python
+                stdout = io.StringIO()
+                with redirect_stdout(stdout):
+                    exec(func_str)
+                out = stdout.getvalue()
+                reply = out, out.strip() == '3'
+                reply = reply[0]
 
-            out = stdout.getvalue()
-            reply = out, out.strip() == '3'
-            reply = reply[0]
+            except:
+                trace = traceback.format_exc()
+                print("EROORRREUOFGO", trace)
         else:
             reply = eval(python)
 
