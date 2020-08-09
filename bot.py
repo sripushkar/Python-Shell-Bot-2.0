@@ -24,7 +24,7 @@ def formatCommand(str, prefix):
     return newStr
 
 def evalOrExec(str):
-    if "\"" in str or "'" in str or "=" in str or ":" in str:
+    if "\"" in str or "'" in str or "=" in str or ":" in str or "(" in str:
         return 'exec'
     return 'eval'
 
