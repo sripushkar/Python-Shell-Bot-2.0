@@ -24,7 +24,7 @@ Then to install the dependencies, do
 
 To run the bot, use 
 
-`python bot.js`
+`python bot.py`
 
 ### To use the bot:
 Start off with >>, then your python command. For example: >>print("hello") will make the bot send 'hello' in the server. To use multiple lines, you can either enter using a new line in the message, or seperate your statements with a semicolon. For example: >>print("Hello"); print("World")
