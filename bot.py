@@ -12,7 +12,7 @@ TOKEN = os.environ.get('TOKEN', None)
 client = discord.Client()
 
 def isCommand(msg, prefix):
-    if msg[0:2] == prefix and "import os" not in msg:
+    if msg[0:2] == prefix and "import os" not in msg and "TOKEN" not in msg:
         return True
     return False
 
